@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ct7liang.accountsafer.activity.DataBackUpActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/title_bar"/>
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@mipmap/extra"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/start"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textColor="#FFFFFF"
+            android:text="点击开始备份"
+            android:background="@color/toumingColor"/>
+        <TextView
+            android:layout_marginTop="26dp"
+            android:id="@+id/into"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textColor="#FFFFFF"
+            android:text="导入本地数据"
+            android:background="@color/toumingColor"/>
+    </LinearLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/snack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

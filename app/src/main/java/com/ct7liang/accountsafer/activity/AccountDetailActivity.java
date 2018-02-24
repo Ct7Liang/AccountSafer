@@ -1,0 +1,171 @@
+package com.ct7liang.accountsafer.activity;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.andrognito.patternlockview.PatternLockView;
+import com.andrognito.patternlockview.listener.PatternLockViewListener;
+import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.ct7liang.accountsafer.BaseActivity;
+import com.ct7liang.accountsafer.BaseApp;
+import com.ct7liang.accountsafer.R;
+import com.ct7liang.accountsafer.bean.Account;
+import com.ct7liang.accountsafer.utils.Base64Utils;
+import com.ct7liang.accountsafer.utils.SnackBarUtils;
+
+import java.util.List;
+
+import cn.ct7liang.greendao.AccountDao;
+import cn.ct7liang.greendao.QueryDao;
+
+import static com.ct7liang.accountsafer.R.id.remark;
+
+public class AccountDetailActivity extends BaseActivity {
+
+    private Account account;
+    private View a;
+    private View b;
+    private TextView tvA;
+    private TextView tvP;
+    private TextView tvR;
+    private PatternLockView patternLockView;
+    private AccountDao accountDao;
+    private QueryDao queryDao;
+    private Dialog d;
+
+    @Override
+    public int setLayout() {
+        return R.layout.activity_account_detail;
+    }
+
+    @Override
+    public void findView() {
+        findViewById(R.id.back).setOnClickListener(this);
+        findViewById(R.id.delete).setOnClickListener(this);
+        findViewById(R.id.update).setOnClickListener(this);
+        a = findViewById(R.id.a);
+        b = findViewById(R.id.b);
+        tvA = (TextView) findViewById(R.id.account);
+        tvP = (TextView) findViewById(R.id.password);
+        tvR = (TextView) findViewById(remark);
+        patternLockView = (PatternLockView) findViewById(R.id.pattern_lock_view);
+        patternLockView.addPatternLockListener(new PatternLockViewListener() {
+            @Override
+            public void onStarted() {}
+            @Override
+            public void onProgress(List<PatternLockView.Dot> progressPattern) {}
+            @Override
+            public void onComplete(List<PatternLockView.Dot> pattern) {
+                String s = PatternLockUtils.patternToString(patternLockView, pattern);
+                if (s.equals(Base64Utils.Base64ToString(queryDao.loadAll().get(0).getQueryPassword()))){
+                    a.setVisibility(View.GONE);
+                    b.setVisibility(View.VISIBLE);
+                }else{
+                    patternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                    SnackBarUtils.show(findViewById(R.id.snack), "查询密码错误", "#DD4E41", new Snackbar.Callback(){
+                        @Override
+                        public void onDismissed(Snackbar transientBottomBar, int event) {
+                            patternLockView.clearPattern();
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCleared() {}
+        });
+    }
+
+    @Override
+    public void initData() {
+        account = (Account) getIntent().getSerializableExtra("bean");
+        if (account==null){
+            finish();
+        }
+        accountDao = BaseApp.getDaoSession().getAccountDao();
+        queryDao = BaseApp.getDaoSession().getQueryDao();
+    }
+
+    @Override
+    public void initView() {
+        a.setVisibility(View.VISIBLE);
+        b.setVisibility(View.GONE);
+        ((TextView)findViewById(R.id.title)).setText(Base64Utils.Base64ToString(account.getTag()));
+        tvA.setText("账号: " + Base64Utils.Base64ToString(account.getAccount()));
+        tvP.setText("密码: " + Base64Utils.Base64ToString(account.getPassword()));
+        String remark = account.getRemark();
+        if (remark!=null){
+            tvR.setText("备注: " + Base64Utils.Base64ToString(remark));
+        }
+    }
+
+    @Override
+    public void initFinish() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back:
+                finish();
+                break;
+            case R.id.delete:
+                showDeleteWindow();
+                //删除
+                break;
+            case R.id.update:
+                //修改
+                Intent i = new Intent(this, EditAccountActivity.class);
+                i.putExtra("bean", account);
+                startActivityForResult(i, 111);
+                break;
+            case R.id.cancel:
+                d.dismiss();
+                break;
+            case R.id.confirm:
+                accountDao.delete(account);
+                d.dismiss();
+                SnackBarUtils.show(findViewById(R.id.snack), "删除成功", "#82BF23", new Snackbar.Callback(){
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        finish();
+                    }
+                });
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 222){
+            account = (Account) data.getSerializableExtra("bean");
+            ((TextView)findViewById(R.id.title)).setText(Base64Utils.Base64ToString(account.getTag()));
+            tvA.setText("账号: " + Base64Utils.Base64ToString(account.getAccount()));
+            tvP.setText("密码: " + Base64Utils.Base64ToString(account.getPassword()));
+            tvR.setText("备注: " + Base64Utils.Base64ToString(account.getRemark()));
+            SnackBarUtils.show(findViewById(R.id.snack), "修改成功", "#82BF23");
+        }
+        if (resultCode == 333){
+            SnackBarUtils.show(findViewById(R.id.snack), "修改操作已取消", "#82BF23");
+        }
+    }
+
+    private void showDeleteWindow() {
+        d = new Dialog(this);
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        d.setCanceledOnTouchOutside(false);
+        View view = View.inflate(this, R.layout.window_delete, null);
+        view.findViewById(R.id.cancel).setOnClickListener(this);
+        view.findViewById(R.id.confirm).setOnClickListener(this);
+        LinearLayout.LayoutParams l = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        d.addContentView(view, l);
+        d.show();
+    }
+}

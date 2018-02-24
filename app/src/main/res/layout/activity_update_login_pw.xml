@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ct7liang.accountsafer.activity.UpdateLoginPwActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/title_bar"/>
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toumingColor">
+            <EditText
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="请输入原密码"
+                android:paddingLeft="15dp"
+                android:textSize="14sp"
+                android:textColorHint="#FFFFFF"
+                android:inputType="textPassword"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toumingColor">
+            <EditText
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:id="@+id/password_new"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="请输入新密码"
+                android:paddingLeft="15dp"
+                android:textSize="14sp"
+                android:textColorHint="#FFFFFF"
+                android:inputType="textPassword"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toumingColor">
+            <EditText
+                android:textColor="#FFFFFF"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:id="@+id/password_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="请确认密码"
+                android:paddingLeft="15dp"
+                android:textSize="14sp"
+                android:textColorHint="#FFFFFF"
+                android:inputType="textPassword"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginRight="0.5dp"
+                android:id="@+id/cancel"
+                android:gravity="center"
+                android:text="取消"
+                android:textSize="13sp"
+                android:textColor="#FFFFFF"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:background="@color/toumingColor"/>
+            <TextView
+                android:layout_marginLeft="0.5dp"
+                android:id="@+id/confirm"
+                android:gravity="center"
+                android:text="确认"
+                android:textSize="13sp"
+                android:textColor="#FFFFFF"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:background="@color/toumingColor"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/snack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
