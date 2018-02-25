@@ -1,10 +1,20 @@
 package com.ct7liang.accountsafer.activity;
 
+import android.app.Dialog;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.andrognito.patternlockview.PatternLockView;
+import com.andrognito.patternlockview.listener.PatternLockViewListener;
+import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.BaseApp;
 import com.ct7liang.accountsafer.R;
@@ -14,14 +24,20 @@ import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.FileUtils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
 import com.ct7liang.tangyuan.AppFolder;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
+import com.ct7liang.tangyuan.utils.ToastUtils;
 import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.List;
+
 import cn.ct7liang.greendao.AccountDao;
 import cn.ct7liang.greendao.QueryDao;
 import cn.ct7liang.greendao.UserDao;
+
+import static com.ct7liang.accountsafer.utils.Base64Utils.StringToBase64;
 
 
 public class DataBackUpActivity extends BaseActivity {
@@ -47,6 +63,11 @@ public class DataBackUpActivity extends BaseActivity {
             }
         }
     };
+    private Dialog entryDialog;
+    private Dialog queryDialog;
+    private EditText et_entry;
+    private File dirs;  //同步数据文件夹
+    private PatternLockView patternLockView;
 
     @Override
     public int setLayout() {
@@ -71,7 +92,7 @@ public class DataBackUpActivity extends BaseActivity {
             if (!dir.exists()){
                 dir.mkdirs();
             }
-            File dirs = new File(file, "/fromBackups");
+            dirs = new File(file, "/fromBackups");
             if (!dirs.exists()){
                 dirs.mkdirs();
             }
@@ -105,6 +126,24 @@ public class DataBackUpActivity extends BaseActivity {
             case R.id.into:
                 fromBackup();
                 break;
+            case R.id.cancel:
+                entryDialog.dismiss();
+                break;
+            case R.id.confirm:
+                String string = et_entry.getText().toString().trim();
+                if (TextUtils.isEmpty(string)){
+                    return;
+                }
+                if (StringToBase64(string).equals(userDao.loadAll().get(0).getPassword())){
+                    entryDialog.dismiss();
+                    showCheckQueryPswd();
+                }else{
+                    ToastUtils.showStatic(mAct, "密码错误");
+                }
+                break;
+            case R.id.close:
+                queryDialog.dismiss();
+                break;
         }
     }
 
@@ -124,7 +163,7 @@ public class DataBackUpActivity extends BaseActivity {
                 backUp.entryPswd = userDao.loadAll().get(0).getPassword();
                 backUp.queryPswd = queryDao.loadAll().get(0).getQueryPassword();
                 backUp.list = accounts;
-                String s = Base64Utils.StringToBase64(new Gson().toJson(backUp));
+                String s = StringToBase64(new Gson().toJson(backUp));
                 File dir = new File(AppFolder.get(), "/backups");
                 if (dir.listFiles().length>0){
                     deleteFiles(dir);
@@ -143,14 +182,12 @@ public class DataBackUpActivity extends BaseActivity {
         }.start();
     }
 
-
     private void fromBackup() {
         if (AppFolder.get()==null){
             SnackBarUtils.show(findViewById(R.id.snack), "本地数据操作权限关闭,操作无法进行");
             return;
         }
-        final File dir = new File(AppFolder.get(), "/fromBackups");
-        if (dir.listFiles(new FileFilter() {
+        if (dirs.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
                 if (pathname.getPath().endsWith(".7")){
@@ -162,45 +199,47 @@ public class DataBackUpActivity extends BaseActivity {
             SnackBarUtils.show(findViewById(R.id.snack), "目标文件夹无相关数据", "#DD4E41");
             return;
         }else{
-            // TODO: 2018-02-24 验证密码
-            showProgressDialog();
-            new Thread(){
-                @Override
-                public void run() {
-                    File[] files = dir.listFiles();
-                    File dis = null;
-                    for (int i = 0; i < files.length; i++) {
-                        if (files[i].getPath().endsWith(".7")){
-                            dis = files[i];
-                            break;
-                        }
-                    }
-                    if (dis==null){
-                        return;
-                    }
-                    String content = FileUtils.read(dis);
-                    String s = Base64Utils.Base64ToString(content);
-                    final BackUp backUp = new Gson().fromJson(s, BackUp.class);
-                    Account account;
-                    for (int i = 0; i < backUp.list.size(); i++) {
-                        account = new Account();
-                        account.setTag(backUp.list.get(i).getTag());
-                        account.setAccount(backUp.list.get(i).getAccount());
-                        account.setPassword(backUp.list.get(i).getPassword());
-                        String remark = backUp.list.get(i).getRemark();
-                        if (remark!=null){
-                            account.setRemark(remark);
-                        }
-                        accountDao.insert(account);
-                    }
-                    dis.delete();
-                    SystemClock.sleep(600);
-                    handler.sendEmptyMessage(1);
-                }
-            }.start();
+            showCheckEntryPswd();
         }
     }
 
+    private void doBackup() {
+        showProgressDialog();
+        new Thread(){
+            @Override
+            public void run() {
+                File[] files = dirs.listFiles();
+                File dis = null;
+               for (int i = 0; i < files.length; i++) {
+                    if (files[i].getPath().endsWith(".7")){
+                        dis = files[i];
+                        break;
+                    }
+                }
+                if (dis==null){
+                    return;
+                }
+                String content = FileUtils.read(dis);
+                String s = Base64Utils.Base64ToString(content);
+                final BackUp backUp = new Gson().fromJson(s, BackUp.class);
+                Account account;
+                for (int i = 0; i < backUp.list.size(); i++) {
+                    account = new Account();
+                    account.setTag(backUp.list.get(i).getTag());
+                    account.setAccount(backUp.list.get(i).getAccount());
+                    account.setPassword(backUp.list.get(i).getPassword());
+                    String remark = backUp.list.get(i).getRemark();
+                    if (remark!=null){
+                        account.setRemark(remark);
+                    }
+                    accountDao.insert(account);
+                }
+                dis.delete();
+                SystemClock.sleep(600);
+                handler.sendEmptyMessage(1);
+            }
+        }.start();
+    }
 
     private void deleteFiles(File dir) {
         File[] files;
@@ -215,10 +254,45 @@ public class DataBackUpActivity extends BaseActivity {
     }
 
     private void showCheckEntryPswd(){
-
+        entryDialog = new Dialog(this);
+        entryDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        entryDialog.setCanceledOnTouchOutside(false);
+        View view = View.inflate(this, R.layout.window_check_entry_pswd, null);
+        et_entry = (EditText) view.findViewById(R.id.entry_password);
+        view.findViewById(R.id.confirm).setOnClickListener(this);
+        view.findViewById(R.id.cancel).setOnClickListener(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenInfoUtil.getScreenWH(this)[0]/6*5, ViewGroup.LayoutParams.WRAP_CONTENT);
+        entryDialog.addContentView(view, layoutParams);
+        entryDialog.show();
     }
 
     private void showCheckQueryPswd(){
-
+        queryDialog = new Dialog(this);
+        queryDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        queryDialog.setCanceledOnTouchOutside(false);
+        View view = View.inflate(this, R.layout.window_check_query_pswd, null);
+        patternLockView = (PatternLockView) view.findViewById(R.id.pattern_lock_view);
+        view.findViewById(R.id.close).setOnClickListener(this);
+        patternLockView.addPatternLockListener(new PatternLockViewListener() {
+            @Override
+            public void onStarted() {}
+            @Override
+            public void onProgress(List<PatternLockView.Dot> progressPattern) {}
+            @Override
+            public void onComplete(List<PatternLockView.Dot> pattern) {
+                String s = PatternLockUtils.patternToString(patternLockView, pattern);
+                if (Base64Utils.StringToBase64(s).equals(queryDao.loadAll().get(0).getQueryPassword())){
+                    queryDialog.dismiss();
+                    doBackup();
+                }else{
+                    patternLockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                }
+            }
+            @Override
+            public void onCleared() {}
+        });
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenInfoUtil.getScreenWH(this)[0]/7*6, ViewGroup.LayoutParams.WRAP_CONTENT);
+        queryDialog.addContentView(view, layoutParams);
+        queryDialog.show();
     }
 }

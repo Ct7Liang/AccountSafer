@@ -41,6 +41,12 @@ public class SettingQueryPasswordActivity extends BaseActivity {
             public void onComplete(List<PatternLockView.Dot> pattern) {
                 if (temppassword==null){
                     temppassword = PatternLockUtils.patternToString(mPatternLockView, pattern);
+                    if (temppassword.length()<4){
+                        tips.setText("密码长度过短");
+                        mPatternLockView.clearPattern();
+                        temppassword = null;
+                        return;
+                    }
                     mPatternLockView.clearPattern();
                     tips.setText("请再次确认密码");
                 }else{
