@@ -1,5 +1,6 @@
 package com.ct7liang.accountsafer.activity;
 
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.User;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
+import com.jaeger.library.StatusBarUtil;
 
 import cn.ct7liang.greendao.UserDao;
 
@@ -29,10 +31,16 @@ public class EditEntryPwActivity extends BaseActivity {
     }
 
     @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#787772"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#787772"));
+    }
+
+    @Override
     public void findView() {
         ((TextView)findViewById(R.id.title)).setText("修改登录密码");
         findViewById(R.id.back).setOnClickListener(this);
-        findViewById(R.id.cancel).setOnClickListener(this);
+//        findViewById(R.id.cancel).setOnClickListener(this);
         findViewById(R.id.confirm).setOnClickListener(this);
         ep = (EditText) findViewById(R.id.password);
         epn = (EditText) findViewById(R.id.password_new);
@@ -46,14 +54,10 @@ public class EditEntryPwActivity extends BaseActivity {
     }
 
     @Override
-    public void initView() {
-
-    }
+    public void initView() {}
 
     @Override
-    public void initFinish() {
-
-    }
+    public void initFinish() {}
 
     @Override
     public void onClick(View v) {
@@ -61,9 +65,9 @@ public class EditEntryPwActivity extends BaseActivity {
             case R.id.back:
                 finish();
                 break;
-            case R.id.cancel:
-                finish();
-                break;
+//            case R.id.cancel:
+//                finish();
+//                break;
             case R.id.confirm:
                 String pswd = ep.getText().toString().trim();
                 String pswd1 = epn.getText().toString().trim();

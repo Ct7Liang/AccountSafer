@@ -8,54 +8,62 @@
     tools:context="com.ct7liang.accountsafer.activity.AboutAppActivity">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/title_bar"/>
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_about"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#FFFFFF">
-
-        <LinearLayout
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@color/toumingColor">
+        <TextView
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/a"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/b"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/c"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="应用数据完全存储在"/>
+        <TextView
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/d"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/e"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/f"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="用户的手机本地"/>
+        <TextView
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="请勿清除应用数据"/>
+        <TextView
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="如需清理应用数据"/>
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="请先进行数据备份"/>
     </LinearLayout>
+
+
+
 
 </RelativeLayout>

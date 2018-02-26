@@ -1,5 +1,6 @@
 package com.ct7liang.accountsafer.activity;
 
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Query;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.List;
 
@@ -29,6 +31,12 @@ public class EditQueryPwActivity extends BaseActivity {
     @Override
     public int setLayout() {
         return R.layout.activity_update_query_pw;
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#787772"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#787772"));
     }
 
     @Override

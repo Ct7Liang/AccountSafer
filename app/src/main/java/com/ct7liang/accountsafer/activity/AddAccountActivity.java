@@ -1,5 +1,6 @@
 package com.ct7liang.accountsafer.activity;
 
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.List;
 
@@ -30,6 +32,12 @@ public class AddAccountActivity extends BaseActivity {
     @Override
     public int setLayout() {
         return R.layout.activity_add_account;
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#335860"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#335860"));
     }
 
     @Override

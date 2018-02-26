@@ -41,5 +41,6 @@ dependencies {
     compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
     compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'com.yalantis:contextmenu:1.0.7'
+    compile 'com.jph.takephoto:takephoto_library:4.0.3'
     testCompile 'junit:junit:4.12'
 }

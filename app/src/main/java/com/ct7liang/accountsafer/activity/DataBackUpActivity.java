@@ -1,6 +1,7 @@
 package com.ct7liang.accountsafer.activity;
 
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -27,6 +28,7 @@ import com.ct7liang.tangyuan.AppFolder;
 import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 import com.ct7liang.tangyuan.utils.ToastUtils;
 import com.google.gson.Gson;
+import com.jaeger.library.StatusBarUtil;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -72,6 +74,12 @@ public class DataBackUpActivity extends BaseActivity {
     @Override
     public int setLayout() {
         return R.layout.activity_data_back_up;
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#363A43"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#363A43"));
     }
 
     @Override

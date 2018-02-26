@@ -11,6 +11,7 @@ import com.ct7liang.accountsafer.BaseApp;
 import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
+import com.jaeger.library.StatusBarUtil;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
@@ -31,6 +32,12 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
     @Override
     public int setLayout() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#335860"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#335860"));
     }
 
     @Override

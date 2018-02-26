@@ -10,33 +10,77 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <include layout="@layout/title_bar"/>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/default_password"
+            android:src="@mipmap/login_default"
             android:scaleType="centerCrop"/>
+
     </LinearLayout>
 
     <LinearLayout
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/toumingColor">
-        <EditText
-            android:textColor="#FFFFFF"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:gravity="center"
-            android:id="@+id/password"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="?android:attr/actionBarSize">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="请输入登录密码"
-            android:paddingLeft="15dp"
-            android:textSize="14sp"
-            android:textColorHint="#FFFFFF"
-            android:inputType="textPassword"
-            android:background="@null"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/user_icon"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="30dp"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:src="@mipmap/logo"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/et"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:orientation="horizontal"
+                android:background="@drawable/edit_text_bg"
+                android:paddingLeft="7dp">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:padding="10dp"
+                    android:src="@mipmap/pass_word"/>
+                <EditText
+                    android:textCursorDrawable="@drawable/edit_text_cursor_shape_01"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:hint="请输入登录密码"
+                    android:textSize="14sp"
+                    android:textColorHint="#FFFFFF"
+                    android:inputType="textPassword"
+                    android:background="@null"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.3"
+            android:orientation="vertical">
+        </LinearLayout>
+
     </LinearLayout>
 
     <android.support.design.widget.CoordinatorLayout

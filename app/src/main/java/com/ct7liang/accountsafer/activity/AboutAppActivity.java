@@ -1,19 +1,14 @@
 package com.ct7liang.accountsafer.activity;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.R;
+import com.jaeger.library.StatusBarUtil;
 
 public class AboutAppActivity extends BaseActivity {
-
-    private TextView a;
-    private TextView b;
-    private TextView c;
-    private TextView d;
-    private TextView e;
-    private TextView f;
 
     @Override
     public int setLayout() {
@@ -21,14 +16,17 @@ public class AboutAppActivity extends BaseActivity {
     }
 
     @Override
-    public void findView() {
-        a = (TextView) findViewById(R.id.a);
-        b = (TextView) findViewById(R.id.b);
-        c = (TextView) findViewById(R.id.c);
-        d = (TextView) findViewById(R.id.d);
-        e = (TextView) findViewById(R.id.e);
-        f = (TextView) findViewById(R.id.f);
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#4D6BA7"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#4D6BA7"));
     }
+
+    @Override
+    public void findView() {
+        findViewById(R.id.back).setOnClickListener(this);
+        ((TextView)findViewById(R.id.title)).setText("关于软件");
+    }
+
 
     @Override
     public void initData() {
@@ -47,6 +45,10 @@ public class AboutAppActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.back:
+                finish();
+                break;
+        }
     }
 }
