@@ -69,33 +69,39 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
         ArrayList<MenuObject> menuObjects = new ArrayList<>();
 
         MenuObject menuObject = new MenuObject("收起");
-        menuObject.setBgColor(Color.parseColor("#FF0000"));
-        menuObject.setDividerColor(R.color.a);
+        menuObject.setBgColor(Color.parseColor("#FFFFFF"));
+        menuObject.setResource(R.mipmap.a);
+        menuObject.setDividerColor(R.color.white);
         menuObjects.add(menuObject);
 
         MenuObject menuObject1 = new MenuObject("添加账号");
-        menuObject1.setBgColor(Color.parseColor("#FFAA00"));
-        menuObject1.setDividerColor(R.color.b);
+        menuObject1.setBgColor(Color.parseColor("#FFFFFF"));
+        menuObject1.setResource(R.mipmap.b);
+        menuObject1.setDividerColor(R.color.white);
         menuObjects.add(menuObject1);
 
         MenuObject menuObject2 = new MenuObject("修改登录密码");
-        menuObject2.setBgColor(Color.parseColor("#FFFF00"));
-        menuObject2.setDividerColor(R.color.c);
+        menuObject2.setBgColor(Color.parseColor("#FFFFFF"));
+        menuObject2.setDividerColor(R.color.white);
+        menuObject2.setResource(R.mipmap.c);
         menuObjects.add(menuObject2);
 
         MenuObject menuObject3 = new MenuObject("修改查询密码");
-        menuObject3.setBgColor(Color.parseColor("#84D945"));
-        menuObject3.setDividerColor(R.color.d);
+        menuObject3.setBgColor(Color.parseColor("#FFFFFF"));
+        menuObject3.setDividerColor(R.color.white);
+        menuObject3.setResource(R.mipmap.d);
         menuObjects.add(menuObject3);
 
         MenuObject menuObject4 = new MenuObject("数据备份");
-        menuObject4.setBgColor(Color.parseColor("#FFAA00"));
-        menuObject4.setDividerColor(R.color.b);
+        menuObject4.setBgColor(Color.parseColor("#FFFFFF"));
+        menuObject4.setDividerColor(R.color.white);
+        menuObject4.setResource(R.mipmap.e);
         menuObjects.add(menuObject4);
 
         MenuObject menuObject5 = new MenuObject("软件说明");
-        menuObject5.setBgColor(Color.parseColor("#FFFF00"));
-        menuObject5.setDividerColor(R.color.c);
+        menuObject5.setBgColor(Color.parseColor("#FFFFFF"));
+        menuObject5.setDividerColor(R.color.white);
+        menuObject5.setResource(R.mipmap.f);
         menuObjects.add(menuObject5);
 
         TypedValue tv = new TypedValue();

@@ -14,11 +14,20 @@
     <color name="grayColor">#D1D1D1</color>
     <color name="buttonColor">#FF5555</color>
 
-    <color name="a">#FF0000</color>
-    <color name="b">#FFAA00</color>
-    <color name="c">#FFFF00</color>
-    <color name="d">#84D945</color>
-    <color name="e">#84D945</color>
-    <color name="f">#84D945</color>
+    <!--<color name="a">#FF0000</color>-->
+    <!--<color name="b">#FFAA00</color>-->
+    <!--<color name="c">#FFFF00</color>-->
+    <!--<color name="d">#84D945</color>-->
+    <!--<color name="e">#84D945</color>-->
+    <!--<color name="f">#84D945</color>-->
+
+    <color name="a">#335860</color>
+    <color name="b">#335860</color>
+    <color name="c">#113640</color>
+    <color name="d">#002530</color>
+    <color name="e">#001420</color>
+    <color name="f">#000310</color>
+
+    <color name="y">#FFFF00</color>
 
 </resources>

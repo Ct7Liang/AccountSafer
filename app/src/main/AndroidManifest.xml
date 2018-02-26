@@ -30,7 +30,7 @@
         <activity android:name=".activity.AccountDetailActivity" />
         <activity android:name=".activity.EditAccountActivity" />
         <activity android:name=".activity.DataBackUpActivity" />
-        <activity android:name=".activity.AboutAppActivity"></activity>
+        <activity android:name=".activity.AboutAppActivity"/>
     </application>
 
 </manifest>
