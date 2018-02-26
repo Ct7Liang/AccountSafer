@@ -12,7 +12,7 @@
         android:orientation="vertical">
         <include layout="@layout/title_bar"/>
         <ImageView
-            android:src="@mipmap/default_login"
+            android:src="@mipmap/default_password"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

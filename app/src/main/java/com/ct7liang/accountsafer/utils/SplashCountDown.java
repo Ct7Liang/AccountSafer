@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 
-import com.ct7liang.accountsafer.activity.SettingEntryPasswordActivity;
-import com.ct7liang.accountsafer.activity.LoginActivity;
+import com.ct7liang.accountsafer.activity.CreateEntryPwActivity;
+import com.ct7liang.accountsafer.activity.EntryActivity;
 import com.ct7liang.accountsafer.activity.SplashActivity;
 
 import java.lang.ref.WeakReference;
@@ -45,9 +45,9 @@ public class SplashCountDown extends CountDownTimer {
         SplashActivity activity = mWeakReference.get();
         if (activity!=null){
             if (activity.isNewEntry==0){
-                activity.startActivity(new Intent(activity, SettingEntryPasswordActivity.class));
+                activity.startActivity(new Intent(activity, CreateEntryPwActivity.class));
             }else{
-                activity.startActivity(new Intent(activity, LoginActivity.class));
+                activity.startActivity(new Intent(activity, EntryActivity.class));
             }
             activity.finish();
         }

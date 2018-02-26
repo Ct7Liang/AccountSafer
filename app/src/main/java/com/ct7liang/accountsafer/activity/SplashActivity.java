@@ -70,9 +70,9 @@ public class SplashActivity extends BaseActivity {
             case R.id.count_down:
                 splashCountDown.cancel();
                 if (isNewEntry==0){
-                    startActivity(new Intent(this, SettingEntryPasswordActivity.class));
+                    startActivity(new Intent(this, CreateEntryPwActivity.class));
                 }else{
-                    startActivity(new Intent(this, LoginActivity.class));
+                    startActivity(new Intent(this, EntryActivity.class));
                 }
                 finish();
                 break;

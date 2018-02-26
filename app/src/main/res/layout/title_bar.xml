@@ -9,6 +9,8 @@
     android:gravity="center_vertical"
     android:background="@color/toptitlecolor">
 
+    <!--android:background="@color/toptitlecolor"-->
+
     <RelativeLayout
         android:id="@+id/left"
         android:layout_width="?attr/actionBarSize"

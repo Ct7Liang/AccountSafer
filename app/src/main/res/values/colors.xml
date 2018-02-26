@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="toptitlecolor">#DD4E43</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
@@ -9,11 +10,15 @@
     <color name="snackcolor">#4C8BF5</color>
     <color name="successColor">#82BF23</color>
     <color name="errorColor">#DD4E41</color>
+    <color name="toumingColor">#30000000</color>
+    <color name="grayColor">#D1D1D1</color>
+    <color name="buttonColor">#FF5555</color>
+
     <color name="a">#FF0000</color>
     <color name="b">#FFAA00</color>
     <color name="c">#FFFF00</color>
     <color name="d">#84D945</color>
-    <color name="toumingColor">#30000000</color>
-    <color name="grayColor">#D1D1D1</color>
-    <color name="buttonColor">#FF5555</color>
+    <color name="e">#84D945</color>
+    <color name="f">#84D945</color>
+
 </resources>

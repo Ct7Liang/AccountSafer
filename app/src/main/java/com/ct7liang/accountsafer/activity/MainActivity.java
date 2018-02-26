@@ -11,7 +11,6 @@ import com.ct7liang.accountsafer.BaseApp;
 import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
-import com.ct7liang.tangyuan.utils.ToastUtils;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
@@ -143,11 +142,11 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
                 break;
             case 2:
                 //修改登录密码
-                startActivity(new Intent(this, UpdateLoginPwActivity.class));
+                startActivity(new Intent(this, EditEntryPwActivity.class));
                 break;
             case 3:
                 //修改查询密码
-                startActivity(new Intent(this, UpdateQueryPwActivity.class));
+                startActivity(new Intent(this, EditQueryPwActivity.class));
                 break;
             case 4:
                 //数据备份
@@ -155,7 +154,8 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
                 break;
             case 5:
                 //软件说明
-                ToastUtils.showStatic(mAct, "该功能尚未开发");
+                startActivity(new Intent(this, AboutAppActivity.class));
+//                ToastUtils.showStatic(mAct, "该功能尚未开发");
                 break;
         }
     }

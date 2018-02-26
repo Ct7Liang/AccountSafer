@@ -15,7 +15,7 @@ import com.ct7liang.accountsafer.utils.Base64Utils;
 
 import java.util.List;
 
-public class LoginActivity extends BaseActivity {
+public class EntryActivity extends BaseActivity {
 
     private String passwordstr;
 
@@ -37,7 +37,7 @@ public class LoginActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
                 String pswd = s.toString().trim();
                 if (passwordstr.equals(pswd)){
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(EntryActivity.this, MainActivity.class));
                     finish();
                 }
             }
@@ -61,7 +61,7 @@ public class LoginActivity extends BaseActivity {
         if (users.size()>0){
             passwordstr = Base64Utils.Base64ToString(users.get(0).getPassword());
         }else{
-            startActivity(new Intent(LoginActivity.this, SettingEntryPasswordActivity.class));
+            startActivity(new Intent(EntryActivity.this, CreateEntryPwActivity.class));
             finish();
         }
     }

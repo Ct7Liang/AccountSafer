@@ -21,15 +21,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.SettingEntryPasswordActivity" />
-        <activity android:name=".activity.SettingQueryPasswordActivity" />
-        <activity android:name=".activity.UpdateLoginPwActivity" />
-        <activity android:name=".activity.UpdateQueryPwActivity" />
+        <activity android:name=".activity.EntryActivity" />
+        <activity android:name=".activity.CreateEntryPwActivity" />
+        <activity android:name=".activity.CreateQueryPwActivity" />
+        <activity android:name=".activity.EditEntryPwActivity" />
+        <activity android:name=".activity.EditQueryPwActivity" />
         <activity android:name=".activity.AddAccountActivity" />
         <activity android:name=".activity.AccountDetailActivity" />
         <activity android:name=".activity.EditAccountActivity" />
-        <activity android:name=".activity.DataBackUpActivity"></activity>
+        <activity android:name=".activity.DataBackUpActivity" />
+        <activity android:name=".activity.AboutAppActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.ct7liang.accountsafer.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -12,8 +13,9 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.User;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
+import com.jaeger.library.StatusBarUtil;
 
-public class SettingEntryPasswordActivity extends BaseActivity {
+public class CreateEntryPwActivity extends BaseActivity {
 
     private EditText editText01;
     private EditText editText02;
@@ -24,11 +26,17 @@ public class SettingEntryPasswordActivity extends BaseActivity {
     }
 
     @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#787772"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#787772"));
+    }
+
+    @Override
     public void findView() {
         ((TextView)findViewById(R.id.title)).setText("设置登录密码");
         editText01 = (EditText) findViewById(R.id.password);
         editText02 = (EditText) findViewById(R.id.password_confirm);
-        findViewById(R.id.cancel).setOnClickListener(this);
+//        findViewById(R.id.cancel).setOnClickListener(this);
         findViewById(R.id.confirm).setOnClickListener(this);
         findViewById(R.id.back).setOnClickListener(this);
     }
@@ -54,9 +62,9 @@ public class SettingEntryPasswordActivity extends BaseActivity {
             case R.id.back:
                 exitApp();
                 break;
-            case R.id.cancel:
-                exitApp();
-                break;
+//            case R.id.cancel:
+//                exitApp();
+//                break;
             case R.id.confirm:
                 String pw01 = editText01.getText().toString().trim();
                 String pw02 = editText02.getText().toString().trim();
@@ -71,7 +79,7 @@ public class SettingEntryPasswordActivity extends BaseActivity {
                 BaseApp.getDaoSession().getUserDao().deleteAll();
                 User user = new User(null, Base64Utils.StringToBase64(pw01));
                 BaseApp.getDaoSession().insert(user);
-                startActivity(new Intent(this, SettingQueryPasswordActivity.class));
+                startActivity(new Intent(this, CreateQueryPwActivity.class));
                 finish();
                 break;
         }

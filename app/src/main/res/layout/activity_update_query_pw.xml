@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ct7liang.accountsafer.activity.UpdateQueryPwActivity">
+    tools:context="com.ct7liang.accountsafer.activity.EditQueryPwActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@mipmap/default_login"/>
+            android:src="@mipmap/default_password"/>
     </LinearLayout>
 
     <com.andrognito.patternlockview.PatternLockView

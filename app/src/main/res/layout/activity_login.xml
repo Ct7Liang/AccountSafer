@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ct7liang.accountsafer.activity.LoginActivity">
+    tools:context="com.ct7liang.accountsafer.activity.EntryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/default_login"
+            android:src="@mipmap/default_password"
             android:scaleType="centerCrop"/>
     </LinearLayout>
 

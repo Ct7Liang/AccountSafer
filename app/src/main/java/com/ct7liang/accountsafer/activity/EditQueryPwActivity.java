@@ -18,7 +18,7 @@ import java.util.List;
 
 import cn.ct7liang.greendao.QueryDao;
 
-public class UpdateQueryPwActivity extends BaseActivity {
+public class EditQueryPwActivity extends BaseActivity {
 
     private boolean isRead;
     private PatternLockView patternLockView;

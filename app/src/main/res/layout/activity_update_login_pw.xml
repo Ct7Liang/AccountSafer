@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ct7liang.accountsafer.activity.UpdateLoginPwActivity">
+    tools:context="com.ct7liang.accountsafer.activity.EditEntryPwActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,7 +13,7 @@
         <include layout="@layout/title_bar"/>
         <ImageView
             android:scaleType="centerCrop"
-            android:src="@mipmap/default_login"
+            android:src="@mipmap/default_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

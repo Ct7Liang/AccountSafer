@@ -1,6 +1,7 @@
 package com.ct7liang.accountsafer.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 import com.andrognito.patternlockview.PatternLockView;
@@ -8,18 +9,20 @@ import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.BaseApp;
-import com.ct7liang.accountsafer.utils.Constant;
 import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Query;
 import com.ct7liang.accountsafer.utils.Base64Utils;
+import com.ct7liang.accountsafer.utils.Constant;
 import com.ct7liang.tangyuan.utils.SpUtils;
+import com.ct7liang.tangyuan.utils.ToastUtils;
+import com.jaeger.library.StatusBarUtil;
 import java.util.List;
 
-public class SettingQueryPasswordActivity extends BaseActivity {
+public class CreateQueryPwActivity extends BaseActivity {
 
     private PatternLockView mPatternLockView;
-    private String temppassword;
-    private TextView tips;
+    private String tempPassword;
+//    private TextView tips;
 
     @Override
     public int setLayout() {
@@ -27,10 +30,16 @@ public class SettingQueryPasswordActivity extends BaseActivity {
     }
 
     @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, Color.parseColor("#787772"), 0);
+        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#787772"));
+    }
+
+    @Override
     public void findView() {
         ((TextView)findViewById(R.id.title)).setText("设置查询密码");
         findViewById(R.id.back).setOnClickListener(this);
-        tips = (TextView) findViewById(R.id.tips);
+//        tips = (TextView) findViewById(R.id.tips);
         mPatternLockView = (PatternLockView) findViewById(R.id.pattern_lock_view);
         mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
@@ -39,28 +48,28 @@ public class SettingQueryPasswordActivity extends BaseActivity {
             public void onProgress(List<PatternLockView.Dot> progressPattern) {}
             @Override
             public void onComplete(List<PatternLockView.Dot> pattern) {
-                if (temppassword==null){
-                    temppassword = PatternLockUtils.patternToString(mPatternLockView, pattern);
-                    if (temppassword.length()<4){
-                        tips.setText("密码长度过短");
+                if (tempPassword ==null){
+                    tempPassword = PatternLockUtils.patternToString(mPatternLockView, pattern);
+                    if (tempPassword.length()<4){
+                        ToastUtils.showStatic(mAct, "密码长度过短");
                         mPatternLockView.clearPattern();
-                        temppassword = null;
+                        tempPassword = null;
                         return;
                     }
                     mPatternLockView.clearPattern();
-                    tips.setText("请再次确认密码");
+                    ToastUtils.showStatic(mAct, "请再次确认密码");
                 }else{
                     String s = PatternLockUtils.patternToString(mPatternLockView, pattern);
-                    if (s.equals(temppassword)){
+                    if (s.equals(tempPassword)){
                         BaseApp.getDaoSession().getQueryDao().deleteAll();
                         Query query = new Query(null, Base64Utils.StringToBase64(s));
                         BaseApp.getDaoSession().getQueryDao().insert(query);
                         SpUtils.start().saveInt(Constant.IsNewEntry, 1);
-                        startActivity(new Intent(mAct, LoginActivity.class));
+                        startActivity(new Intent(mAct, EntryActivity.class));
                     }else{
-                        temppassword = null;
+                        tempPassword = null;
                         mPatternLockView.clearPattern();
-                        tips.setText("密码设置不一致, 请重新设置");
+                        ToastUtils.showStatic(mAct, "密码设置不一致, 请重新设置");
                     }
                 }
             }

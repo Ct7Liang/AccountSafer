@@ -15,7 +15,7 @@ import com.ct7liang.accountsafer.utils.SnackBarUtils;
 
 import cn.ct7liang.greendao.UserDao;
 
-public class UpdateLoginPwActivity extends BaseActivity {
+public class EditEntryPwActivity extends BaseActivity {
 
     private EditText ep;
     private EditText epn;
