@@ -141,13 +141,12 @@ public class EntryActivity extends TakePhotoActivity implements View.OnClickList
         File imageStr = new File(AppFolder.get(), "/user.txt");
         if (imageStr.exists()){
             imageStr.delete();
-        }else{
-            try {
-                imageStr.createNewFile();
-                FileUtils.write(imageStr.getPath(), s);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+        }
+        try {
+            imageStr.createNewFile();
+            FileUtils.write(imageStr.getPath(), s);
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
         Glide.with(this).load(file).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .transform(new BitmapTransformation[]{GlideHelper.getInstance().getCircleTransform(this)}).into(userImage);
