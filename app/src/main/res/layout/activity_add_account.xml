@@ -10,7 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <include layout="@layout/title_bar"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/title_bar"/>
+            <TextView
+                android:id="@+id/commit"
+                android:layout_alignParentRight="true"
+                android:layout_width="?android:attr/actionBarSize"
+                android:layout_height="?android:attr/actionBarSize"
+                android:text="完成"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:gravity="center"/>
+        </RelativeLayout>
+
         <ImageView
             android:src="@mipmap/default_main"
             android:scaleType="centerCrop"
@@ -97,18 +111,7 @@
                 android:textColorHint="#FFFFFF"
                 android:background="@null"/>
         </LinearLayout>
-        <TextView
-            android:id="@+id/commit"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/toumingColor"
-            android:text="录入"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:gravity="center"/>
+
     </LinearLayout>
 
     <android.support.design.widget.CoordinatorLayout

@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
     @Override
     public void findView() {
         tagFlowLayout = (TagFlowLayout) findViewById(R.id.flowLayout);
+        ((TextView)findViewById(R.id.title)).setText("我的账号");
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.image_right).setVisibility(View.VISIBLE);
         findViewById(R.id.right).setOnClickListener(this);
