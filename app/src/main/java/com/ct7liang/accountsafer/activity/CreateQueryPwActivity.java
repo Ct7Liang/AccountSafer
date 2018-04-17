@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
-
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
@@ -17,7 +16,6 @@ import com.ct7liang.accountsafer.utils.Constant;
 import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 import com.ct7liang.tangyuan.utils.SpUtils;
 import com.ct7liang.tangyuan.utils.ToastUtils;
-
 import java.util.List;
 
 public class CreateQueryPwActivity extends BaseActivity {
