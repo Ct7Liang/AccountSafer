@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
+
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
@@ -13,16 +14,16 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Query;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.Constant;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 import com.ct7liang.tangyuan.utils.SpUtils;
 import com.ct7liang.tangyuan.utils.ToastUtils;
-import com.jaeger.library.StatusBarUtil;
+
 import java.util.List;
 
 public class CreateQueryPwActivity extends BaseActivity {
 
     private PatternLockView mPatternLockView;
     private String tempPassword;
-//    private TextView tips;
 
     @Override
     public int setLayout() {
@@ -31,15 +32,16 @@ public class CreateQueryPwActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#787772"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#787772"));
+        View title = findViewById(R.id.title_back_ground);
+        title.setBackgroundColor(Color.parseColor("#787772"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(mAct),0 ,0);
     }
 
     @Override
     public void findView() {
-        ((TextView)findViewById(R.id.title)).setText("设置查询密码");
-        findViewById(R.id.back).setOnClickListener(this);
-//        tips = (TextView) findViewById(R.id.tips);
+        initStatusBar();
+        ((TextView)findViewById(R.id.center_text)).setText("设置查询密码");
+        findViewById(R.id.left_image).setOnClickListener(this);
         mPatternLockView = (PatternLockView) findViewById(R.id.pattern_lock_view);
         mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
@@ -90,7 +92,7 @@ public class CreateQueryPwActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 exitApp();
                 break;
         }

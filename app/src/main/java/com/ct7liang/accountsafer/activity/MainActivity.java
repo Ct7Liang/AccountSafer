@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
-
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.BaseApp;
 import com.ct7liang.accountsafer.R;
@@ -18,7 +17,6 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 

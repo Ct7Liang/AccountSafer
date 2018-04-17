@@ -13,7 +13,7 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.User;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
-import com.jaeger.library.StatusBarUtil;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 
 import cn.ct7liang.greendao.UserDao;
 
@@ -32,16 +32,18 @@ public class EditEntryPwActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#787772"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#787772"));
+        View title = findViewById(R.id.title_back_ground);
+        title.setBackgroundColor(Color.parseColor("#787772"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
 
     @Override
     public void findView() {
-        ((TextView)findViewById(R.id.title)).setText("修改登录密码");
-        findViewById(R.id.back).setOnClickListener(this);
-//        findViewById(R.id.cancel).setOnClickListener(this);
-        findViewById(R.id.confirm).setOnClickListener(this);
+        initStatusBar();
+        ((TextView)findViewById(R.id.center_text)).setText("修改登录密码");
+        findViewById(R.id.left_image).setOnClickListener(this);
+        ((TextView)findViewById(R.id.right_text)).setText("确认");
+        findViewById(R.id.right).setOnClickListener(this);
         ep = (EditText) findViewById(R.id.password);
         epn = (EditText) findViewById(R.id.password_new);
         epc = (EditText) findViewById(R.id.password_confirm);
@@ -62,13 +64,10 @@ public class EditEntryPwActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 finish();
                 break;
-//            case R.id.cancel:
-//                finish();
-//                break;
-            case R.id.confirm:
+            case R.id.right:
                 String pswd = ep.getText().toString().trim();
                 String pswd1 = epn.getText().toString().trim();
                 String pswd2 = epc.getText().toString().trim();

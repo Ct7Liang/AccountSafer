@@ -3,7 +3,6 @@ package com.ct7liang.accountsafer.activity;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
-
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.R;
 import com.jaeger.library.StatusBarUtil;
@@ -26,7 +25,6 @@ public class AboutAppActivity extends BaseActivity {
         findViewById(R.id.back).setOnClickListener(this);
         ((TextView)findViewById(R.id.title)).setText("关于软件");
     }
-
 
     @Override
     public void initData() {

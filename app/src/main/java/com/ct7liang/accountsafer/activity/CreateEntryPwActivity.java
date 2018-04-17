@@ -6,14 +6,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.BaseApp;
 import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.User;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
-import com.jaeger.library.StatusBarUtil;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 
 public class CreateEntryPwActivity extends BaseActivity {
 
@@ -27,18 +26,20 @@ public class CreateEntryPwActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#787772"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#787772"));
+        View title = findViewById(R.id.title_back_ground);
+        title.setBackgroundColor(Color.parseColor("#787772"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(mAct), 0, 0);
     }
 
     @Override
     public void findView() {
-        ((TextView)findViewById(R.id.title)).setText("设置登录密码");
+        initStatusBar();
+        findViewById(R.id.left_image).setOnClickListener(this);
+        ((TextView)findViewById(R.id.center_text)).setText("设置登录密码");
+        ((TextView)findViewById(R.id.right_text)).setText("确认");
+        findViewById(R.id.right).setOnClickListener(this);
         editText01 = (EditText) findViewById(R.id.password);
         editText02 = (EditText) findViewById(R.id.password_confirm);
-//        findViewById(R.id.cancel).setOnClickListener(this);
-        findViewById(R.id.confirm).setOnClickListener(this);
-        findViewById(R.id.back).setOnClickListener(this);
     }
 
     @Override
@@ -59,13 +60,10 @@ public class CreateEntryPwActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 exitApp();
                 break;
-//            case R.id.cancel:
-//                exitApp();
-//                break;
-            case R.id.confirm:
+            case R.id.right:
                 String pw01 = editText01.getText().toString().trim();
                 String pw02 = editText02.getText().toString().trim();
                 if (TextUtils.isEmpty(pw01)||TextUtils.isEmpty(pw02)){
