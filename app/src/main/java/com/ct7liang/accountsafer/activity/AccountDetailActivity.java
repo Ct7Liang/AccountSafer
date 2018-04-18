@@ -19,7 +19,7 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
-import com.jaeger.library.StatusBarUtil;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 
 import java.util.List;
 
@@ -48,13 +48,16 @@ public class AccountDetailActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#335860"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#335860"));
+        View title = findViewById(R.id.title_back_ground);
+        title.setBackgroundColor(Color.parseColor("#00000000"));
+//        title.setBackgroundColor(Color.parseColor("#335860"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
 
     @Override
     public void findView() {
-        findViewById(R.id.back).setOnClickListener(this);
+        initStatusBar();
+        findViewById(R.id.left_image).setOnClickListener(this);
         findViewById(R.id.delete).setOnClickListener(this);
         findViewById(R.id.update).setOnClickListener(this);
         a = findViewById(R.id.a);
@@ -103,7 +106,7 @@ public class AccountDetailActivity extends BaseActivity {
     public void initView() {
         a.setVisibility(View.VISIBLE);
         b.setVisibility(View.GONE);
-        ((TextView)findViewById(R.id.title)).setText(Base64Utils.Base64ToString(account.getTag()));
+        ((TextView)findViewById(R.id.center_text)).setText(Base64Utils.Base64ToString(account.getTag()));
         tvA.setText("账号: " + Base64Utils.Base64ToString(account.getAccount()));
         tvP.setText("密码: " + Base64Utils.Base64ToString(account.getPassword()));
         String remark = account.getRemark();
@@ -120,7 +123,7 @@ public class AccountDetailActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 finish();
                 break;
             case R.id.delete:

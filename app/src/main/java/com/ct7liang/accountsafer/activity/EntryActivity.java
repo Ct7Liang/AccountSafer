@@ -3,14 +3,15 @@ package com.ct7liang.accountsafer.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -20,10 +21,11 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.User;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.FileUtils;
+import com.ct7liang.accountsafer.utils.SnackBarUtils;
 import com.ct7liang.tangyuan.AppFolder;
 import com.ct7liang.tangyuan.utils.GlideHelper;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 import com.ct7liang.tangyuan.utils.ToastUtils;
-import com.jaeger.library.StatusBarUtil;
 import com.jph.takephoto.app.TakePhotoActivity;
 import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TResult;
@@ -36,6 +38,8 @@ public class EntryActivity extends TakePhotoActivity implements View.OnClickList
 
     private String passwordstr;
     private ImageView userImage;
+    private ImageView image;
+    private EditText password;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,13 +47,27 @@ public class EntryActivity extends TakePhotoActivity implements View.OnClickList
 
         setContentView(R.layout.activity_login);
 
-        StatusBarUtil.setColor(this, Color.parseColor("#5BB0CD"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#5BB0CD"));
+        if(Build.VERSION.SDK_INT >= 19) {
+            Window window = this.getWindow();
+            window.addFlags(67108864);
+            View title = findViewById(R.id.title_back_ground);
+            title.setBackgroundColor(Color.parseColor("#00000000"));
+            title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
+        }
 
-        findViewById(R.id.back).setOnClickListener(this);
-        ((TextView)findViewById(R.id.title)).setText("登录");
+        findViewById(R.id.left_image).setOnClickListener(this);
         userImage = (ImageView) findViewById(R.id.user_icon);
         userImage.setOnClickListener(this);
+        findViewById(R.id.login).setOnClickListener(this);
+        password = (EditText) findViewById(R.id.password);
+        image = (ImageView) findViewById(R.id.bg_image);
+        image.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Animation animation = AnimationUtils.loadAnimation(EntryActivity.this, R.anim.login_bg_translate_anim);
+                image.startAnimation(animation);
+            }
+        }, 500);
 
         File file = new File(AppFolder.get(), "/user.txt");
         File file1 = new File(AppFolder.get(), "user.jpg");
@@ -62,23 +80,6 @@ public class EntryActivity extends TakePhotoActivity implements View.OnClickList
             Glide.with(this).load(file2).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
                     .transform(new BitmapTransformation[]{GlideHelper.getInstance().getCircleTransform(this)}).into(userImage);
         }
-
-        EditText password = (EditText) findViewById(R.id.password);
-
-        password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                String pswd = s.toString().trim();
-                if (passwordstr.equals(pswd)){
-                    startActivity(new Intent(EntryActivity.this, MainActivity.class));
-                    finish();
-                }
-            }
-        });
 
         List<User> users = BaseApp.getDaoSession().getUserDao().loadAll();
         if (users.size()>0){
@@ -107,8 +108,17 @@ public class EntryActivity extends TakePhotoActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 exitApp();
+                break;
+            case R.id.login:
+                String pswd = password.getText().toString().trim();
+                if (passwordstr.equals(pswd)){
+                    startActivity(new Intent(EntryActivity.this, MainActivity.class));
+                    finish();
+                }else{
+                    SnackBarUtils.show(findViewById(R.id.snack), "密码错误", "#66DD5044");
+                }
                 break;
             case R.id.user_icon:
                 CropOptions cropOptions = new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(false).create();

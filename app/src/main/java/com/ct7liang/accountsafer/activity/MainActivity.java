@@ -4,19 +4,22 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.BaseApp;
 import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
-import com.jaeger.library.StatusBarUtil;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,16 +37,19 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#335860"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#335860"));
+        View title = findViewById(R.id.title_back_ground);
+//        title.setBackgroundColor(Color.parseColor("#335860"));
+        title.setBackgroundColor(Color.parseColor("#00000000"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
 
     @Override
     public void findView() {
+        initStatusBar();
         tagFlowLayout = (TagFlowLayout) findViewById(R.id.flowLayout);
-        ((TextView)findViewById(R.id.title)).setText("我的账号");
-        findViewById(R.id.back).setOnClickListener(this);
-        findViewById(R.id.image_right).setVisibility(View.VISIBLE);
+        ((TextView)findViewById(R.id.center_text)).setText("我的账号");
+        findViewById(R.id.left_image).setOnClickListener(this);
+        ((ImageView)findViewById(R.id.right_image)).setImageResource(R.mipmap.more);
         findViewById(R.id.right).setOnClickListener(this);
     }
 
@@ -131,7 +137,7 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 exitApp();
                 break;
             case R.id.right:

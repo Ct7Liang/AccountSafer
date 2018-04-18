@@ -28,7 +28,6 @@ import com.ct7liang.tangyuan.AppFolder;
 import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 import com.ct7liang.tangyuan.utils.ToastUtils;
 import com.google.gson.Gson;
-import com.jaeger.library.StatusBarUtil;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -78,14 +77,17 @@ public class DataBackUpActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#363A43"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#363A43"));
+        View title = findViewById(R.id.title_back_ground);
+        title.setBackgroundColor(Color.parseColor("#00000000"));
+//        title.setBackgroundColor(Color.parseColor("#363A43"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
 
     @Override
     public void findView() {
-        findViewById(R.id.back).setOnClickListener(this);
-        ((TextView)findViewById(R.id.title)).setText("数据备份");
+        initStatusBar();
+        findViewById(R.id.left_image).setOnClickListener(this);
+        ((TextView)findViewById(R.id.center_text)).setText("数据备份");
         findViewById(R.id.start).setOnClickListener(this);
         findViewById(R.id.into).setOnClickListener(this);
     }
@@ -125,7 +127,7 @@ public class DataBackUpActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.back:
+            case R.id.left_image:
                 finish();
                 break;
             case R.id.start:

@@ -7,22 +7,21 @@
     android:layout_height="match_parent"
     tools:context="com.ct7liang.accountsafer.activity.EditQueryPwActivity">
 
-    <LinearLayout
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+        <!--<include layout="@layout/title_bar"/>-->
+    <!--</LinearLayout>-->
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <include layout="@layout/title_bar"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/default_password"/>
-    </LinearLayout>
-
+        android:scaleType="centerCrop"
+        android:src="@mipmap/default_password"/>
 
     <!--android:background="@color/toumingColor"-->
     <com.andrognito.patternlockview.PatternLockView
-
         android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
         android:id="@+id/pattern_lock_view"
@@ -31,6 +30,8 @@
         app:normalStateColor="@color/white"
         app:correctStateColor="@color/snackcolor"
         app:wrongStateColor="@color/pomegranate"/>
+
+    <include layout="@layout/title_bar_center"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/snack"

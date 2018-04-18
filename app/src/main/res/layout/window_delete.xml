@@ -21,13 +21,14 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="0.3dp"
         android:background="@color/grayColor"/>
 
     <TextView
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:paddingLeft="15dp"
         android:text="确定要删除这条账号信息?"
         android:textColor="#3C4350"/>
 

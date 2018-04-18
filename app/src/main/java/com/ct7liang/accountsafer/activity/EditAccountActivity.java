@@ -13,7 +13,7 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.accountsafer.utils.SnackBarUtils;
-import com.jaeger.library.StatusBarUtil;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 
 import cn.ct7liang.greendao.AccountDao;
 
@@ -33,19 +33,24 @@ public class EditAccountActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#335860"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#335860"));
+        View title = findViewById(R.id.title_back_ground);
+        title.setBackgroundColor(Color.parseColor("#00000000"));
+//        title.setBackgroundColor(Color.parseColor("#335860"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
 
     @Override
     public void findView() {
-        ((TextView)findViewById(R.id.title)).setText("修改账号信息");
-        findViewById(R.id.back).setOnClickListener(this);
+        initStatusBar();
+        ((TextView)findViewById(R.id.center_text)).setText("修改账号信息");
+        findViewById(R.id.left_image).setOnClickListener(this);
+        ((TextView)findViewById(R.id.right_text)).setText("确认");
+        findViewById(R.id.right).setOnClickListener(this);
         eT = (EditText) findViewById(R.id.tag);
         eA = (EditText) findViewById(R.id.account);
         eP = (EditText) findViewById(R.id.password);
         eR = (EditText) findViewById(R.id.remark);
-        findViewById(R.id.confirm).setOnClickListener(this);
+//        findViewById(R.id.confirm).setOnClickListener(this);
     }
 
     @Override
@@ -73,12 +78,12 @@ public class EditAccountActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 Intent ii = new Intent();
                 setResult(333, ii);
                 finish();
                 break;
-            case R.id.confirm:
+            case R.id.right:
                 String t = eT.getText().toString().trim();
                 String a = eA.getText().toString().trim();
                 String p = eP.getText().toString().trim();

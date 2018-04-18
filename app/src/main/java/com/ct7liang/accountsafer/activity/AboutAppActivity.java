@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.R;
-import com.jaeger.library.StatusBarUtil;
+import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 
 public class AboutAppActivity extends BaseActivity {
 
@@ -16,14 +16,17 @@ public class AboutAppActivity extends BaseActivity {
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, Color.parseColor("#4D6BA7"), 0);
-        findViewById(R.id.title_bar).setBackgroundColor(Color.parseColor("#4D6BA7"));
+        View title = findViewById(R.id.title_back_ground);
+        title.setBackgroundColor(Color.parseColor("#00000000"));
+//        title.setBackgroundColor(Color.parseColor("#4D6BA7"));
+        title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
 
     @Override
     public void findView() {
-        findViewById(R.id.back).setOnClickListener(this);
-        ((TextView)findViewById(R.id.title)).setText("关于软件");
+        initStatusBar();
+        findViewById(R.id.left_image).setOnClickListener(this);
+        ((TextView)findViewById(R.id.left_text)).setText("关于软件");
     }
 
     @Override
@@ -44,7 +47,7 @@ public class AboutAppActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back:
+            case R.id.left_image:
                 finish();
                 break;
         }

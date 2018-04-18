@@ -7,17 +7,11 @@
     android:background="#adadad"
     tools:context="com.ct7liang.accountsafer.activity.AboutAppActivity">
 
-    <LinearLayout
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@mipmap/default_about"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <include layout="@layout/title_bar"/>
-        <ImageView
-            android:scaleType="centerCrop"
-            android:src="@mipmap/default_about"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_centerInParent="true"
@@ -26,7 +20,9 @@
         android:orientation="vertical"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:background="@color/toumingColor">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/account_edit_bg">
         <TextView
             android:gravity="center"
             android:layout_marginBottom="5dp"
@@ -63,7 +59,6 @@
             android:text="请先进行数据备份"/>
     </LinearLayout>
 
-
-
+    <include layout="@layout/title_bar_left"/>
 
 </RelativeLayout>

@@ -12,27 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include layout="@layout/title_bar_center"/>
-
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-            <!--<include layout="@layout/title_bar"/>-->
-            <!--<TextView-->
-                <!--android:id="@+id/confirm"-->
-                <!--android:gravity="center"-->
-                <!--android:text="确认"-->
-                <!--android:textSize="13sp"-->
-                <!--android:textColor="#FFFFFF"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_width="?android:attr/actionBarSize"-->
-                <!--android:layout_height="?android:attr/actionBarSize"/>-->
-        <!--</RelativeLayout>-->
-    <!--</LinearLayout>-->
+    <!--<include layout="@layout/title_bar_center"/>-->
 
     <LinearLayout
         android:layout_centerInParent="true"
@@ -44,7 +24,9 @@
             android:paddingLeft="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/toumingColor">
+            android:background="@drawable/account_edit_bg"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp">
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -64,11 +46,13 @@
         </LinearLayout>
         <LinearLayout
             android:paddingLeft="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/toumingColor">
+            android:background="@drawable/account_edit_bg"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp">
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -88,11 +72,13 @@
         </LinearLayout>
         <LinearLayout
             android:paddingLeft="15dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/toumingColor">
+            android:background="@drawable/account_edit_bg"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp">
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -111,6 +97,8 @@
                 android:background="@null"/>
         </LinearLayout>
     </LinearLayout>
+
+    <include layout="@layout/title_bar_center"/>
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/snack"

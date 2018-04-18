@@ -31,7 +31,8 @@ public class CreateQueryPwActivity extends BaseActivity {
     @Override
     protected void setStatusBar() {
         View title = findViewById(R.id.title_back_ground);
-        title.setBackgroundColor(Color.parseColor("#787772"));
+        title.setBackgroundColor(Color.parseColor("#00000000"));
+//        title.setBackgroundColor(Color.parseColor("#787772"));
         title.setPadding(0, ScreenInfoUtil.getStatusHeight(mAct),0 ,0);
     }
 
