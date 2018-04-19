@@ -12,7 +12,6 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
@@ -27,17 +26,16 @@ import com.ct7liang.accountsafer.utils.SnackBarUtils;
 import com.ct7liang.tangyuan.AppFolder;
 import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
 import com.ct7liang.tangyuan.utils.ToastUtils;
+import com.ct7liang.tangyuan.utils.loading.LoadingDialog;
+import com.ct7liang.tangyuan.utils.loading.ZddDialog;
 import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.List;
-
 import cn.ct7liang.greendao.AccountDao;
 import cn.ct7liang.greendao.QueryDao;
 import cn.ct7liang.greendao.UserDao;
-
 import static com.ct7liang.accountsafer.utils.Base64Utils.StringToBase64;
 
 
@@ -54,12 +52,20 @@ public class DataBackUpActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 0:
-                    cancelProgress();
+                    LoadingDialog.dismiss();
                     SnackBarUtils.show(findViewById(R.id.snack), "数据备份成功", "#82BF23");
                     break;
                 case 1:
-                    cancelProgress();
+                    LoadingDialog.dismiss();
                     SnackBarUtils.show(findViewById(R.id.snack), "数据导入成功", "#82BF23");
+                    break;
+                case 2:
+                    LoadingDialog.dismiss();
+                    SnackBarUtils.show(findViewById(R.id.snack), "数据备份已取消", "#DD4E41");
+                    break;
+                case 3:
+                    LoadingDialog.dismiss();
+                    SnackBarUtils.show(findViewById(R.id.snack), "数据导入已取消", "#DD4E41");
                     break;
             }
         }
@@ -69,6 +75,8 @@ public class DataBackUpActivity extends BaseActivity {
     private EditText et_entry;
     private File dirs;  //同步数据文件夹
     private PatternLockView patternLockView;
+    private boolean backupTag = true;
+    private boolean intoTag = true;
 
     @Override
     public int setLayout() {
@@ -157,7 +165,11 @@ public class DataBackUpActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 开始备份数据
+     */
     private void backup() {
+        backupTag = true;
         if (AppFolder.get()==null){
             SnackBarUtils.show(findViewById(R.id.snack), "本地数据操作权限关闭,操作无法进行");
             return;
@@ -166,7 +178,15 @@ public class DataBackUpActivity extends BaseActivity {
             SnackBarUtils.show(findViewById(R.id.snack), "暂无数据可以备份");
             return;
         }
-        showProgressDialog();
+        LoadingDialog.show(this, false, R.layout.window_progress, false,
+                ScreenInfoUtil.getScreenWH(this)[0] / 3,
+                ScreenInfoUtil.getScreenWH(this)[0] / 3,
+                new ZddDialog.OnBackPressed() {
+                    @Override
+                    public void onBackPressed() {
+                        backupTag = false;
+                    }
+                }, null);
         new Thread(){
             @Override
             public void run() {
@@ -186,12 +206,20 @@ public class DataBackUpActivity extends BaseActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                SystemClock.sleep(600);
+                SystemClock.sleep(500);
+                if (!backupTag){
+                    deleteFiles(dir);
+                    handler.sendEmptyMessage(2);
+                    return;
+                }
                 handler.sendEmptyMessage(0);
             }
         }.start();
     }
 
+    /**
+     * 开始导入数据
+     */
     private void fromBackup() {
         if (AppFolder.get()==null){
             SnackBarUtils.show(findViewById(R.id.snack), "本地数据操作权限关闭,操作无法进行");
@@ -213,44 +241,6 @@ public class DataBackUpActivity extends BaseActivity {
         }
     }
 
-    private void doBackup() {
-        showProgressDialog();
-        new Thread(){
-            @Override
-            public void run() {
-                File[] files = dirs.listFiles();
-                File dis = null;
-               for (int i = 0; i < files.length; i++) {
-                    if (files[i].getPath().endsWith(".7")){
-                        dis = files[i];
-                        break;
-                    }
-                }
-                if (dis==null){
-                    return;
-                }
-                String content = FileUtils.read(dis);
-                String s = Base64Utils.Base64ToString(content);
-                final BackUp backUp = new Gson().fromJson(s, BackUp.class);
-                Account account;
-                for (int i = 0; i < backUp.list.size(); i++) {
-                    account = new Account();
-                    account.setTag(backUp.list.get(i).getTag());
-                    account.setAccount(backUp.list.get(i).getAccount());
-                    account.setPassword(backUp.list.get(i).getPassword());
-                    String remark = backUp.list.get(i).getRemark();
-                    if (remark!=null){
-                        account.setRemark(remark);
-                    }
-                    accountDao.insert(account);
-                }
-                dis.delete();
-                SystemClock.sleep(600);
-                handler.sendEmptyMessage(1);
-            }
-        }.start();
-    }
-
     private void deleteFiles(File dir) {
         File[] files;
         while(true){
@@ -263,6 +253,9 @@ public class DataBackUpActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 导入数据,登录密码校验
+     */
     private void showCheckEntryPswd(){
         entryDialog = new Dialog(this);
         entryDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -276,6 +269,9 @@ public class DataBackUpActivity extends BaseActivity {
         entryDialog.show();
     }
 
+    /**
+     * 导入数据,查询密码校验
+     */
     private void showCheckQueryPswd(){
         queryDialog = new Dialog(this);
         queryDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -304,5 +300,59 @@ public class DataBackUpActivity extends BaseActivity {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ScreenInfoUtil.getScreenWH(this)[0]/7*6, ViewGroup.LayoutParams.WRAP_CONTENT);
         queryDialog.addContentView(view, layoutParams);
         queryDialog.show();
+    }
+
+    /**
+     * 导入数据
+     */
+    private void doBackup() {
+        intoTag = true;
+        LoadingDialog.show(this, false, R.layout.window_progress, false,
+                ScreenInfoUtil.getScreenWH(this)[0] / 3,
+                ScreenInfoUtil.getScreenWH(this)[0] / 3,
+                new ZddDialog.OnBackPressed() {
+                    @Override
+                    public void onBackPressed() {
+                        intoTag = false;
+                    }
+                }, null);
+        new Thread(){
+            @Override
+            public void run() {
+                File[] files = dirs.listFiles();
+                File dis = null;
+                for (File file : files) {
+                    if (file.getPath().endsWith(".7")) {
+                        dis = file;
+                        break;
+                    }
+                }
+                if (dis==null){
+                    return;
+                }
+                String content = FileUtils.read(dis);
+                String s = Base64Utils.Base64ToString(content);
+                final BackUp backUp = new Gson().fromJson(s, BackUp.class);
+                Account account;
+                for (int i = 0; i < backUp.list.size(); i++) {
+                    if (!intoTag){
+                        handler.sendEmptyMessage(3);
+                        return;
+                    }
+                    account = new Account();
+                    account.setTag(backUp.list.get(i).getTag());
+                    account.setAccount(backUp.list.get(i).getAccount());
+                    account.setPassword(backUp.list.get(i).getPassword());
+                    String remark = backUp.list.get(i).getRemark();
+                    if (remark!=null){
+                        account.setRemark(remark);
+                    }
+                    accountDao.insert(account);
+                }
+                dis.delete();
+                SystemClock.sleep(500);
+                handler.sendEmptyMessage(1);
+            }
+        }.start();
     }
 }

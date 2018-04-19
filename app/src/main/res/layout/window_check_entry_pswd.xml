@@ -19,10 +19,11 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="0.3dp"
         android:background="@color/grayColor"/>
 
     <EditText
+        android:paddingLeft="15dp"
         android:id="@+id/entry_password"
         android:background="@null"
         android:gravity="center_vertical"
