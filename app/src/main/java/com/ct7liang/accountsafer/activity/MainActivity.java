@@ -2,6 +2,7 @@ package com.ct7liang.accountsafer.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +14,9 @@ import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
 import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
+import com.nightonke.boommenu.BoomMenuButton;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
@@ -23,12 +27,14 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements OnMenuItemClickListener {
+public class MainActivity extends BaseActivity implements OnMenuItemClickListener, OnBMClickListener {
 
     private TagFlowLayout tagFlowLayout;
     private List<Account> list;
     private MyTagAdapter adapter;
     private ContextMenuDialogFragment fragment;
+    private int[] imgResource = {R.mipmap.update_entrty, R.mipmap.copy, R.mipmap.add, R.mipmap.update_query, R.mipmap.about};
+    private String[] title = {"修改登录密码", "数据备份", "添加账号", "修改查询密码", "关于我们"};
 
     @Override
     public int setLayout() {
@@ -117,6 +123,21 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
 
         fragment = ContextMenuDialogFragment.newInstance(actionBarHeight, menuObjects);
         fragment.setItemClickListener(this);
+
+
+        BoomMenuButton boomMenuButton = (BoomMenuButton) findViewById(R.id.boom);
+        for (int i = 0; i < boomMenuButton.getPiecePlaceEnum().pieceNumber(); i++) {
+            boomMenuButton.addBuilder(
+                    new TextOutsideCircleButton.Builder()
+                            .normalImageRes(imgResource[i])  //imgResource[i]
+                            .imagePadding(new Rect(50, 50, 50, 50))
+                            .listener(this)
+//                            .isRound(false)
+//                            .buttonCornerRadius(DpPxUtils.Dp2Px(mAct, 15))
+                            .normalText(title[i])
+                            .normalTextColor(Color.parseColor("#FFFFFF"))
+            );
+        }
     }
 
     @Override
@@ -173,7 +194,27 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
             case 5:
                 //软件说明
                 startActivity(new Intent(this, AboutAppActivity.class));
-//                ToastUtils.showStatic(mAct, "该功能尚未开发");
+                break;
+        }
+    }
+
+    @Override
+    public void onBoomButtonClick(int index) {
+        switch (index){
+            case 0:
+                startActivity(new Intent(this, EditEntryPwActivity.class));
+                break;
+            case 1:
+                startActivity(new Intent(this, DataBackUpActivity.class));
+                break;
+            case 2:
+                startActivity(new Intent(this, AddAccountActivity.class));
+                break;
+            case 3:
+                startActivity(new Intent(this, EditQueryPwActivity.class));
+                break;
+            case 4:
+                startActivity(new Intent(this, AboutAppActivity.class));
                 break;
         }
     }

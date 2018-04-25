@@ -157,7 +157,7 @@ public class AccountDetailActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 222){
             account = (Account) data.getSerializableExtra("bean");
-            ((TextView)findViewById(R.id.title)).setText(Base64Utils.Base64ToString(account.getTag()));
+            ((TextView)findViewById(R.id.center_text)).setText(Base64Utils.Base64ToString(account.getTag()));
             tvA.setText("账号: " + Base64Utils.Base64ToString(account.getAccount()));
             tvP.setText("密码: " + Base64Utils.Base64ToString(account.getPassword()));
             tvR.setText("备注: " + Base64Utils.Base64ToString(account.getRemark()));

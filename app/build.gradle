@@ -38,10 +38,11 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'org.greenrobot:greendao-generator:3.0.0'
-    compile 'com.jaeger.statusbarutil:library:1.4.0'
+//    compile 'com.jaeger.statusbarutil:library:1.4.0'
     compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
     compile 'com.hyman:flowlayout-lib:1.1.2'
     compile 'com.yalantis:contextmenu:1.0.7'
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    compile 'com.github.Nightonke:BoomMenu:e20b5ea52d'
     testCompile 'junit:junit:4.12'
 }

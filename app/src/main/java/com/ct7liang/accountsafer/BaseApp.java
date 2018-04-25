@@ -13,6 +13,7 @@ import java.io.File;
 
 import cn.ct7liang.greendao.DaoMaster;
 import cn.ct7liang.greendao.DaoSession;
+import crash.ct7liang.accountsafer.CrashHandler;
 
 /**
  * Created by Administrator on 2018-02-22.
@@ -34,7 +35,13 @@ public class BaseApp extends Application {
         AppFolder.createAppFolder("Account_Safer");
         createSplashFolder();
 
+//        File crashFolder = new File(AppFolder.get()+"crash_log");
+
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(getApplicationContext(), new File(AppFolder.get()+"/crash_log"));
+
         initDataBase();
+
     }
 
     private void initDataBase() {
