@@ -2,12 +2,20 @@ package com.ct7liang.accountsafer.activity;
 
 import android.graphics.Color;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.TextView;
+
 import com.ct7liang.accountsafer.BaseActivity;
 import com.ct7liang.accountsafer.R;
+import com.ct7liang.accountsafer.utils.Constant;
 import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
+import com.ct7liang.tangyuan.utils.SpUtils;
 
-public class AboutAppActivity extends BaseActivity {
+public class AboutAppActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
+
+    private RadioButton a;
+    private RadioButton b;
 
     @Override
     public int setLayout() {
@@ -18,7 +26,6 @@ public class AboutAppActivity extends BaseActivity {
     protected void setStatusBar() {
         View title = findViewById(R.id.title_back_ground);
         title.setBackgroundColor(Color.parseColor("#00000000"));
-//        title.setBackgroundColor(Color.parseColor("#4D6BA7"));
         title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
 
@@ -27,6 +34,16 @@ public class AboutAppActivity extends BaseActivity {
         initStatusBar();
         findViewById(R.id.left_image).setOnClickListener(this);
         ((TextView)findViewById(R.id.left_text)).setText("关于软件");
+        a = (RadioButton) findViewById(R.id.menu_a);
+        a.setOnCheckedChangeListener(this);
+        b = (RadioButton) findViewById(R.id.menu_b);
+        b.setOnCheckedChangeListener(this);
+        boolean isMenuA = SpUtils.start().getBoolean(com.ct7liang.accountsafer.utils.Constant.isTopMenu);
+        if (isMenuA){
+            a.setChecked(true);
+        }else{
+            b.setChecked(true);
+        }
     }
 
     @Override
@@ -49,6 +66,18 @@ public class AboutAppActivity extends BaseActivity {
         switch (v.getId()){
             case R.id.left_image:
                 finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()){
+            case R.id.menu_a:
+                SpUtils.start().saveBoolean(Constant.isTopMenu, isChecked);
+                break;
+            case R.id.menu_b:
+                SpUtils.start().saveBoolean(Constant.isTopMenu, !isChecked);
                 break;
         }
     }

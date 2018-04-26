@@ -13,7 +13,9 @@ import com.ct7liang.accountsafer.BaseApp;
 import com.ct7liang.accountsafer.R;
 import com.ct7liang.accountsafer.bean.Account;
 import com.ct7liang.accountsafer.utils.Base64Utils;
+import com.ct7liang.accountsafer.utils.Constant;
 import com.ct7liang.tangyuan.utils.ScreenInfoUtil;
+import com.ct7liang.tangyuan.utils.SpUtils;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -34,7 +36,8 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
     private MyTagAdapter adapter;
     private ContextMenuDialogFragment fragment;
     private int[] imgResource = {R.mipmap.update_entrty, R.mipmap.copy, R.mipmap.add, R.mipmap.update_query, R.mipmap.about};
-    private String[] title = {"修改登录密码", "数据备份", "添加账号", "修改查询密码", "关于我们"};
+    private String[] title = {"修改登录密码", "数据备份", "添加账号", "修改查询密码", "关于软件"};
+    private BoomMenuButton boomMenuButton;
 
     @Override
     public int setLayout() {
@@ -44,7 +47,6 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
     @Override
     protected void setStatusBar() {
         View title = findViewById(R.id.title_back_ground);
-//        title.setBackgroundColor(Color.parseColor("#335860"));
         title.setBackgroundColor(Color.parseColor("#00000000"));
         title.setPadding(0, ScreenInfoUtil.getStatusHeight(this), 0, 0);
     }
@@ -85,6 +87,7 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
         menuObject.setDividerColor(R.color.white);
         menuObjects.add(menuObject);
 
+
         MenuObject menuObject1 = new MenuObject("添加账号");
         menuObject1.setBgColor(Color.parseColor("#FFFFFF"));
         menuObject1.setResource(R.mipmap.b);
@@ -109,7 +112,7 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
         menuObject4.setResource(R.mipmap.e);
         menuObjects.add(menuObject4);
 
-        MenuObject menuObject5 = new MenuObject("软件说明");
+        MenuObject menuObject5 = new MenuObject("关于软件");
         menuObject5.setBgColor(Color.parseColor("#FFFFFF"));
         menuObject5.setDividerColor(R.color.white);
         menuObject5.setResource(R.mipmap.f);
@@ -124,8 +127,7 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
         fragment = ContextMenuDialogFragment.newInstance(actionBarHeight, menuObjects);
         fragment.setItemClickListener(this);
 
-
-        BoomMenuButton boomMenuButton = (BoomMenuButton) findViewById(R.id.boom);
+        boomMenuButton = (BoomMenuButton) findViewById(R.id.boom);
         for (int i = 0; i < boomMenuButton.getPiecePlaceEnum().pieceNumber(); i++) {
             boomMenuButton.addBuilder(
                     new TextOutsideCircleButton.Builder()
@@ -141,11 +143,23 @@ public class MainActivity extends BaseActivity implements OnMenuItemClickListene
     }
 
     @Override
-    public void initFinish() {}
+    public void initFinish() {
+
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
+        boolean isTopMenu = SpUtils.start().getBoolean(Constant.isTopMenu);
+        if (isTopMenu){
+            findViewById(R.id.right_image).setVisibility(View.VISIBLE);
+            findViewById(R.id.right).setEnabled(true);
+            boomMenuButton.setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.right_image).setVisibility(View.GONE);
+            findViewById(R.id.right).setEnabled(false);
+            boomMenuButton.setVisibility(View.VISIBLE);
+        }
         if (adapter!=null){
             list = BaseApp.getDaoSession().getAccountDao().loadAll();
             if (adapter.getCount()!=list.size()){
